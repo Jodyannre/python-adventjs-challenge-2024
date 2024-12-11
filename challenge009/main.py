@@ -37,14 +37,11 @@ def move_train(board: List[str], mov: Literal['U', 'D', 'R', 'L']) -> Literal['n
 """
 
 
-#Version 2: Igualmente en la web no funciona, error en la web, algo esta mal
-
+#Version 2 :- si funciona en la web
 def move_train(board: List[str], mov: Literal['U', 'D', 'R', 'L']) -> Literal['none', 'crash', 'eat']:
     #Definiciones
     max_row = len(board)
     max_column = len(board[0])
-    movements = {'U': [0, -1], 'D': [0, 1], 'R': [1, 0], 'L': [-1, 0]}
-    symbols = {'o':'crash','*':'eat','·':'none'}
     crash_positions = [-1,max_row,max_column]
     head_x, head_y = [0, 0]
 
@@ -56,7 +53,7 @@ def move_train(board: List[str], mov: Literal['U', 'D', 'R', 'L']) -> Literal['n
             break
 
     #Actualizar posición de la cabeza
-    mov_to_do = movements[mov]
+    mov_to_do = {'U': [0, -1], 'D': [0, 1], 'R': [1, 0], 'L': [-1, 0]}[mov]
     head_x += mov_to_do[0]
     head_y += mov_to_do[1]
 
@@ -65,9 +62,7 @@ def move_train(board: List[str], mov: Literal['U', 'D', 'R', 'L']) -> Literal['n
         return 'crash'
 
     #Verificar estado de la cabeza, encontrar simbolo de resultado
-    result = symbols[board[head_y][head_x]]
-
-    return result
+    return {'o':'crash','*':'eat','·':'none'}[board[head_y][head_x]]
 
 
 if __name__ == '__main__':
