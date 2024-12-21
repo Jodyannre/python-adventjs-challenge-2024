@@ -6,27 +6,23 @@ function findInAgenda(agenda, phone) {
 
         let i1 = undefined
         let i2 = undefined
-        let i3 = undefined
-        let i4 = undefined
+
+        const match = line.match(/<(?<name>[^>]+)>/);
+        if (match) {
+            result = {
+                name: match.groups.name,
+                address: line.replace(match[0], '').trim(),
+            };
+
 
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
     
             if (char == '+' && i1 === undefined) {
-                i1 = i; // Guardar la posición del '+'
+                i1 = i;
                 i2 = i1 + 14;
             }
-    
-            if (char == '<' && i3 === undefined) {
-                i3 = i; // Guardar la posición del '<'
-            }
-    
-            if (char == '>' && i4 === undefined) {
-                i4 = i; // Guardar la posición del '>'
-            }
-    
-            // Si ya tenemos todas las posiciones, podemos salir del ciclo
-            if (i1 !== undefined && i3 !== undefined && i4 !== undefined) {
+            if (i1 !== undefined) {
                 break;
             }
         }
@@ -45,6 +41,7 @@ function findInAgenda(agenda, phone) {
 
         result.name = line.substring(i3+1, i4);
     }
+}
 
     for (let line of agenda.split('\n')) {
         if (line.includes(phone)) {
@@ -55,9 +52,8 @@ function findInAgenda(agenda, phone) {
     }
     
     return count === 0 ? null : result;
-  }
-
-
+  
+}
 const agenda = `+34-600-123-456 Calle Gran Via 12 <Juan Perez>\n
 Plaza Mayor 45 Madrid 28013 <Maria Gomez> +34-600-987-654\n
 <Carlos Ruiz> +1-800-555-0199 Fifth Ave New York`
@@ -74,4 +70,4 @@ console.log(findInAgenda(agenda, '111'))
 // null
 // Explanation: No results
 
-/console.log(findInAgenda(agenda, '1'))
+console.log(findInAgenda(agenda, '1'))
